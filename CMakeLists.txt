@@ -15,4 +15,4 @@ if (EMSCRIPTEN)
 endif()
 
 # Step 4: declare your app
-hello_imgui_add_app(hello hello.cpp)
+hello_imgui_add_app(main main.cpp)

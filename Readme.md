@@ -1,8 +1,19 @@
-# Hello ImGui Demo app
+# Boilerplate ImGui application
 
-This repository demonstrates how to create a new multiplatform application using [Hello, Dear ImGui](https://github.com/pthom/hello_imgui). 
+This repository demonstrates how to create a new multiplatform application using [Hello, Dear ImGui](https://github.com/pthom/hello_imgui) with some organization sprinkied in.
 
 This application will work on iOS, Android, Linux, MacOS, Windows, and emscripten.
+
+# Organization
+My current way of organizing this is to put all components in the `components` directory. Components currently only respond to `render` which will call all ImGui commands based on its internal state. All components have access to the AppState which is the global state of the application and can modify it at any time.
+
+At the root of this example is `Menu` which represents the menu bar of the application window, `MainWindow` which is the main workspace of the application, `Sidebar` which appears on the left side of the window, and `StatusBar` which appears at the bottom of the application window. The actual docking is set up in `main.cpp`.
+
+All root-level components should be included in `components.cpp` after the parent abstract class is defined. Child components of any component should be included by said component. If a component is used in more than one place, include it in the place that makes sense.
+
+When you `render` a component, you must pass it the global application state and optionally a component state. Component states can be used to differentiate two similar components next to each other with different data as well as passing specific events back up the chain.
+
+# Information
 
 ## hello_imgui submodule
 

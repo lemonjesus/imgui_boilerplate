@@ -20,4 +20,4 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=../external/hello_imgui/vcpkg/scripts/buildsyste
 make -j 4
 
 # Step 5: run the app
-./hello
+./main
