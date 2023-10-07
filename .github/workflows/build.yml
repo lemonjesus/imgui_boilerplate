@@ -1,0 +1,65 @@
+name: Build Excutable
+
+on:
+  push:
+    workflow_dispatch:
+    branches:
+      - master
+    tags:
+      - v*
+
+jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsdl2-dev libxinerama1 libxinerama-dev libxcursor1 xorg libglu1-mesa pkg-config
+      - name: Build
+        run: |
+          bash ./compile_sdl_desktop.sh
+      - name: Save Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Linux Executable
+          path: build_sdl/main*
+
+  build_macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install Dependencies
+        run: |
+          brew install SDL2
+      - name: Build
+        run: |
+          bash ./compile_sdl_desktop.sh
+      - name: Save Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: MacOS Executable
+          path: build_sdl/main*
+
+  build_windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build
+        run: |
+          bash ./compile_sdl_desktop.sh
+      - name: Save Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Main Executable
+          path: build_sdl/main.exe
