@@ -32,23 +32,37 @@ jobs:
         cmake .. -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
+    - name: Prepare *nix Artifacts
+      if: ${{ matrix.platform != 'windows-latest' }}
+      run: |
+        mkdir artifacts
+        cp build/app artifacts/
+        cp -r assets artifacts/
+
+    - name: Prepare Windows Artifacts
+      if: ${{ matrix.platform == 'windows-latest' }}
+      run: |
+        mkdir artifacts
+        cp build/Release/app.exe artifacts/
+        cp -r assets artifacts/
+
     - name: Save Linux Artifacts
       if: ${{ matrix.platform == 'ubuntu-latest' }}
       uses: actions/upload-artifact@v3
       with:
         name: Linux Executable
-        path: build/app
+        path: artifacts/**/*
 
     - name: Save macOS Artifacts
       if: ${{ matrix.platform == 'macos-latest' }}
       uses: actions/upload-artifact@v3
       with:
         name: macOS Executable
-        path: build/app
+        path: artifacts/**/*
 
     - name: Save Windows Artifact
       if: ${{ matrix.platform == 'windows-latest' }}
       uses: actions/upload-artifact@v3
       with:
         name: Windows Executable
-        path: build/Release/app.exe
+        path: artifacts/**/*

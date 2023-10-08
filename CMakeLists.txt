@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(helloworld_with_helloimgui)
+project(boilerplate_imgui_app)
 set(CMAKE_CXX_STANDARD 17)
 
 

@@ -14,15 +14,15 @@
 // * how to use assets from the local assets/ folder
 //   Files in the application assets/ folder are embedded automatically
 //   (on iOS/Android/Emscripten)
-ImFont * gAkronimFont = nullptr;
+ImFont * gOpenSansFont = nullptr;
 void MyLoadFonts() {
   // First, we load the default fonts (the font that was loaded first is the default font)
   HelloImGui::ImGuiDefaultSettings::LoadDefaultFont_WithFontAwesomeIcons();
 
   // Then we load a second font from
   // Since this font is in a local assets/ folder, it was embedded automatically
-  std::string fontFilename = "fonts/Akronim-Regular.ttf";
-  gAkronimFont = HelloImGui::LoadFontTTF_WithFontAwesomeIcons(fontFilename, 40.f);
+  std::string fontFilename = "fonts/OpenSans-Regular.ttf";
+  gOpenSansFont = HelloImGui::LoadFontTTF_WithFontAwesomeIcons(fontFilename, 18.f);
 }
 
 int main(int, char **) {
