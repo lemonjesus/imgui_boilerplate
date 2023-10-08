@@ -1,18 +1,29 @@
-cmake_minimum_required(VERSION 3.10)
-project(my_app LANGUAGES C CXX)
-set(CMAKE_CXX_STANDARD 14)
+cmake_minimum_required(VERSION 3.12)
+project(helloworld_with_helloimgui)
+set(CMAKE_CXX_STANDARD 17)
 
-# Step 1: Add hello_imgui as a subdirectory
-add_subdirectory(external/hello_imgui)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${HELLOIMGUI_BASEPATH}/hello_imgui_cmake)
 
-# Step 2: include hello_imgui_add_app
+##########################################################
+# Prepare hello_imgui during configure time
+##########################################################
+# Download hello_imgui
+include(FetchContent)
+Set(FETCHCONTENT_QUIET FALSE)
+FetchContent_Declare(
+    hello_imgui
+    GIT_REPOSITORY https://github.com/pthom/hello_imgui.git
+    GIT_PROGRESS TRUE
+    # Enter the desired git tag below
+    # GIT_TAG 0.8.0
+)
+FetchContent_MakeAvailable(hello_imgui)
+# Make cmake function `hello_imgui_add_app` available
+list(APPEND CMAKE_MODULE_PATH ${HELLOIMGUI_CMAKE_PATH})
 include(hello_imgui_add_app)
 
-# Step 3 (emscripten only): include hello_imgui_emscripten_global_options
-if (EMSCRIPTEN)
-    include(${HELLOIMGUI_BASEPATH}/hello_imgui_cmake/emscripten/hello_imgui_emscripten_global_options.cmake)
-endif()
 
-# Step 4: declare your app
-hello_imgui_add_app(main main.cpp)
+##########################################################
+# Build your app
+##########################################################
+# Call hello_imgui_add_app
+hello_imgui_add_app(app main.cpp)
